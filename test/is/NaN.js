@@ -1,7 +1,3 @@
-'use strict';
-
-var assert = require('../lib/assert.js');
-
 suite('is.NaN', function () {
   test('NaN => ok', function () {
     assert.doesNotThrow(function () {

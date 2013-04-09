@@ -1,7 +1,5 @@
 'use strict';
 
-var assert = require('../lib/assert.js');
-
 var o1 = {},
     o2 = {};
 

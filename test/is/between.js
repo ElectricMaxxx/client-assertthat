@@ -1,7 +1,3 @@
-'use strict';
-
-var assert = require('../lib/assert.js');
-
 suite('is.between', function () {
   test('greater than => exception', function () {
     assert.throws(function () {

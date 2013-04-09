@@ -1,7 +1,4 @@
 'use strict';
-
-var assert = require('../lib/assert.js');
-
 suite('is.lessThan', function () {
   test('less than => ok', function () {
     assert.doesNotThrow(function () {

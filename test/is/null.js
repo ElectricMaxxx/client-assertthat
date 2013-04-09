@@ -1,7 +1,5 @@
 'use strict';
 
-var assert = require('../lib/assert.js');
-
 suite('is.null', function () {
   test('null => ok', function () {
     assert.doesNotThrow(function () {

@@ -1,7 +1,5 @@
 'use strict';
 
-var assert = require('../lib/assert.js');
-
 suite('is.undefined', function () {
   test('undefined => ok', function () {
     assert.doesNotThrow(function () {

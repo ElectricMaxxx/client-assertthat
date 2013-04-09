@@ -1,6 +1,5 @@
 'use strict';
 
-var assert = require('../lib/assert.js');
 
 var falsyCode = function () {
   throw new Error('foo');
