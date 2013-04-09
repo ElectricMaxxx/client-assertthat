@@ -1,14 +1,25 @@
-client version of node-assertthat
+#client version of node-assertthat
 
-`is.equalTo()` are `is.sameAs()` working fine like in original version.
+this will be a client version of 
+https://github.com/goloroden/node-assertthat
 
-added some methods unter has....() to detect some DOM things - only a try.
+All function of the original are working fine. All tests of these functions a green. 
+For more information of these functions have a look to node-asserthat.
 
-Install:
+#How to:
 
-only clone it and call the test.html file. You can add your tests in the test directory. Test them by adding:
-```
+It`s very easy to use this. Clone this projekt an run the `test.html`.
+Thats it!
+
+You are able to add your own tests by doing a simple script include:
+ ```
 <script type="text/javascript" src="test/myTest.js"></script>
 ```
 
-You have to include your app file (that you want to test) too.
+#DOM - Testing
+
+In my workflow with an own projekt a saw that i need some DOM - Testing functions too. 
+I tried to start this by adding new function, that starts with `has.` These functions are not stable. I started do do my fist tests.
+But they have done some good jobs unitl now.
+
+For more Information watch the issue.
