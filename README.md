@@ -23,3 +23,19 @@ I tried to start this by adding new function, that starts with `has.` These func
 But they have done some good jobs unitl now.
 
 For more Information watch the issue.
+
+#has.attribute("value")
+
+Use this test to look for attributes of DOM-Node.
+At the moment it works with `has.class("value")` and `has.id("value")`. You can use it without testing vor an value too.
+```
+var actual = document.createElement("DIV");
+...
+assert.that(actual,has.class("myClass")); //checks if ther is a class with the value myClass in actual
+assert.that(actual,has.id("myId")); //checks if ther is a id with the value myId in actual
+assert.that(actual,has.class()); //checks if therer is a class attribute in actual
+assert.that(actual,has.id()); //checks if therer is a class attribute in actual
+```
+
+multiple classes arn`t tested at the moment!!
+negation has to be tested too!!
