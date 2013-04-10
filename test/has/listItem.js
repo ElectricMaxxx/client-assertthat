@@ -1,6 +1,7 @@
 
 var testList = document.createElement("UL");
 var truthyList = document.createElement("UL");
+truthyList.setAttribute("id","test");
 var li = document.createElement("LI");
 li.appendChild(document.createTextNode("myText"));
 truthyList.appendChild(li);

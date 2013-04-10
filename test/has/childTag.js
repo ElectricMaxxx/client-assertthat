@@ -69,7 +69,7 @@ suite("Testing has.childTag()",function(){
       });
       test("right Child => OK",function(){
         assert.doesNotThrow(function(){
-          assert.that(sandBox,has.childTag("testChild"));
+          assert.that(sandBox,has.childTag("#testChild"));
         });
       });
       test("not expected => error",function(){
