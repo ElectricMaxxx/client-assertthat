@@ -39,3 +39,14 @@ assert.that(actual,has.id()); //checks if therer is a class attribute in actual
 
 multiple classes arn`t tested at the moment!!
 negation has to be tested too!!
+
+#has.listItem
+
+if you want to check if there is a textNode in you list you can use `has.listItem("text");`
+This works only with textNodes at the moment:
+
+```
+assert.that(actual,has.listItem("text")); //passes the test if actual is a list that has one item called 'text'
+assert.that(actual,has.no.listItem("text")); //passes if actual is a list an has no item called 'text'
+```
+
