@@ -50,3 +50,10 @@ assert.that(actual,has.listItem("text")); //passes the test if actual is a list 
 assert.that(actual,has.no.listItem("text")); //passes if actual is a list an has no item called 'text'
 ```
 
+#has.child(expected)
+
+is just working with expected tags as DOM elements: `var expected = document.createElement("LI")`. Only use:
+```
+assert.that(actual,has.child(expected);   //passes if actual is a tag containing an expected tag
+assert.that(actual,has.no.child(expected); //if actual contain even one tage like expected it would fail
+```
