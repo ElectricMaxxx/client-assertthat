@@ -50,10 +50,38 @@ assert.that(actual,has.listItem("text")); //passes the test if actual is a list 
 assert.that(actual,has.no.listItem("text")); //passes if actual is a list an has no item called 'text'
 ```
 
-#has.child(expected)
+#has.childTag()
 
-is just working with expected tags as DOM elements: `var expected = document.createElement("LI")`. Only use:
+
+Is working with both - with css-selectors (just only #id_name) and with DOM-Element-Objects.
+Use this function if you want to check if an Parant has a Child ;-)
+
 ```
-assert.that(actual,has.child(expected);   //passes if actual is a tag containing an expected tag
-assert.that(actual,has.no.child(expected); //if actual contain even one tage like expected it would fail
+var actual = document.getElementById("actual");
+var expected = document.getElementById("expected");
+
+assert.that(actual,has.childTag(expected));
+assert.that(actual,has.no.childTag(expected));
+
+//but easyer:
+assert.that("#actual",has.childTag("#expected"));
+assert.that("#actual",has.no.childTag("#expected"));
 ```
+
+A combination of botch works too.
+
+#has.childText()
+
+test if ther is a text node inside of a parent, works equal to `has.childTag();`
+```
+var actual = document.getElementById("actual");
+
+assert.that(actual,has.childTag("text"));
+assert.that(actual,has.no.childTag("text"));
+
+//but easyer:
+assert.that("#actual",has.childTag("text"));
+assert.that("#actual",has.no.childTag("text"));
+```
+
+A combination of botch works too.
