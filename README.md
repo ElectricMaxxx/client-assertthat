@@ -43,11 +43,16 @@ negation has to be tested too!!
 #has.listItem
 
 if you want to check if there is a textNode in you list you can use `has.listItem("text");`
-This works only with textNodes at the moment:
-
+You can use DOM-Element-Objects or strings with css selectors (actual only # for id`s):
 ```
+var actual = document.getElementById("actual");
+
 assert.that(actual,has.listItem("text")); //passes the test if actual is a list that has one item called 'text'
 assert.that(actual,has.no.listItem("text")); //passes if actual is a list an has no item called 'text'
+
+//easier:
+assert.that("#actual",has.listItem("text")); //passes the test if actual is a list that has one item called 'text'
+assert.that("#actual",has.no.listItem("text")); //passes if actual is a list an has no item called 'text'
 ```
 
 #has.childTag()
