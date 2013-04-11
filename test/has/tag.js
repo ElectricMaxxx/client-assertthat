@@ -79,7 +79,6 @@ suite("Test the has.tag()",function(){
       });
       test("no Expect => error",function(){
         assert.throws(function(){
-          console.log(truthyTag);
           assert.that(truthyTag,has.no.tag("#testLI"));
         });
       });

@@ -101,3 +101,25 @@ assert.that("#actual",has.no.childTag("text"));
 ```
 
 A combination of botch works too.
+
+#has.lengthOf(number,opt)
+
+This is an powerfull tool to check counts of tags in an other.
+You can count only ChildNodes:
+```
+assert.that(actual,has.lengthOf(7)); //passes if actual has got 7 ChildNodes (no Text!)
+assert.that(actual,has.no.lengthOf(7));
+```
+
+But you are able to count tags:
+```
+assert.that(actual,has.lengthOf(7,"LI")); //passes if actual has got 7 listItems
+assert.that(actual,has.no.lengthOf(7,"LI"));
+```
+Or you count all nested tags:
+```
+assert.that(actual,has.lengthOf(7,"all")); //passes if actual has got 7 listItems
+assert.that(actual,has.no.lengthOf(7,"all"));
+```
+for all examples you can use `var actual = document.getElementById("#actual")` or `var actual = "#actual"` with the css 
+selector for an id.
