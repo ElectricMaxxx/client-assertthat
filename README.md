@@ -1,3 +1,6 @@
+sorry for that terrible written english, but my german isn`t even better ;-)
+
+
 #client version of node-assertthat
 
 this will be a client version of 
@@ -5,6 +8,14 @@ https://github.com/goloroden/node-assertthat
 
 All function of the original are working fine. All tests of these functions a green. 
 For more information of these functions have a look to node-asserthat.
+
+But why did i take node-assertthat? Because it is very easy to write and to read. This is a kind of philosophy trough the whole framework.
+I try to keep this, when i ad new functions. What would be easier than writing:
+```
+assert.that(actual,is.equalTo(expected));
+```
+Everybody knows what this is looking for.
+
 
 #How to:
 
