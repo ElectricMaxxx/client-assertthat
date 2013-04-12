@@ -84,6 +84,41 @@ suite("Test the has.tag()",function(){
       });
     });    
   });
+  suite("Call expected and actual by id",function(){
+    setup(function(){
+      var sandBox = document.getElementById("sandBox");
+      sandBox.appendChild(truthyTag);
+      sandBox.appendChild(falsyDiv);
+    });
+    teardown(function(){
+      var sandBox = document.getElementById("sandBox");
+      sandBox.innerHTML = "";
+    });
+    suite("Not available",function(){
+      test("Don`t has this tag in an other => error",function(){
+        assert.throws(function(){
+          assert.that("#test",has.tag("#testLI"));
+        });      
+      });
+      test("no expect => error",function(){
+        assert.throws(function(){
+          assert.that("#test",has.no.tag("#testLI"));
+        });
+      });
+    });
+    suite("Is available",function(){
+      test("tag in other tag available => ok",function(){
+         assert.doesNotThrow(function(){
+           assert.that("#sandBox",has.tag("#testLI"));
+         });
+      });
+      test("no Expect => error",function(){
+        assert.throws(function(){
+          assert.that("#sandBox",has.no.tag("#testLI"));
+        });
+      });
+    });    
+  });
 
 });
 
