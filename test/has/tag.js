@@ -1,22 +1,32 @@
-
-var falsyDiv = document.createElement("DIV");
-var truthyTag = document.createElement("DIV");
-var li = document.createElement("LI");
-li.setAttribute("id","testLI");
-truthyTag.appendChild(li);
-truthyTag.setAttribute("id","test");
 suite("Test the has.tag()",function(){
   suite("Call by Tagname",function(){
+    setup(function(){
+      var sandBox = document.getElementById("sandBox");
+      sandBox.appendChild(document.createElement("P"));
+      sandBox.appendChild(document.createElement("P"));
+      sandBox.appendChild(document.createElement("P"));
+    });    
+    teardown(function(){
+      var sandBox = document.getElementById("sandBox");
+      sandBox.innerHTML = "";
+    });
     suite("Not available",function(){
-      test("don`t has this tag in global => error (can`t test because mocha has lots of li *g*)",function(){
-
+      test("don`t has this tag in global => error ",function(){
+        assert.throws(function(){
+          assert.that("",has.tag("k"));
+        });
       });    
       test("Don`t has this tag in an other => error",function(){
         assert.throws(function(){
-          assert.that(falsyDiv,has.tag("li"));
+          var actual = document.getElementById("testList");
+          assert.that(actual,has.tag("li"));
         });      
       });
-      test("no expect => OK (can`t test because mocha has lots of li *g*)",function(){
+      test("no expect => OK",function(){
+        assert.doesNotThrow(function(){
+          var actual = document.getElementById("sandBox");
+          assert.that(actual,has.no.tag("k"));
+        });
       });
     });
     suite("Is available",function(){
@@ -27,7 +37,9 @@ suite("Test the has.tag()",function(){
       });
       test("tag in other tag available => ok",function(){
          assert.doesNotThrow(function(){
-           assert.that(truthyTag,has.tag("li"));
+           var actual = document.getElementById("sandBox");
+           actual.appendChild(document.createElement("P").appendChild(document.createElement("LI")));
+           assert.that(actual,has.tag("li"));
          });
       });
       test("not expected => error",function(){
@@ -40,41 +52,44 @@ suite("Test the has.tag()",function(){
   suite("Call expected by id",function(){
     setup(function(){
       var sandBox = document.getElementById("sandBox");
-      sandBox.appendChild(truthyTag);
-      sandBox.appendChild(falsyDiv);
-    });
+      sandBox.appendChild(document.createElement("P"));
+      sandBox.appendChild(document.createElement("P"));
+      sandBox.appendChild(document.createElement("P"));
+    });    
     teardown(function(){
       var sandBox = document.getElementById("sandBox");
       sandBox.innerHTML = "";
-    });
+    });    
     suite("Not available",function(){
       test("don`t has this tag in global => error",function(){
         assert.throws(function(){
-          var sandBox = document.getElementById("sandBox");
-          sandBox.innerHTML = "";
           assert.that("",has.tag("#testLI"));
         });
       });    
       test("Don`t has this tag in an other => error",function(){
         assert.throws(function(){
-          assert.that(falsyDiv,has.tag("#testLI"));
+          assert.that("#sandBox",has.tag("#testLI"));
         });      
       });
       test("no expect => OK",function(){
         assert.doesNotThrow(function(){
-          assert.that(falsyDiv,has.no.tag("#testLI"));
+          assert.that("#sandBox",has.no.tag("#testLI"));
         });
       });
     });
     suite("Is available",function(){
       test("tag global available => ok",function(){
          assert.doesNotThrow(function(){
-           assert.that("",has.tag("#test"));
+           assert.that("",has.tag("#sandBox"));
          });
       });
       test("tag in other tag available => ok",function(){
          assert.doesNotThrow(function(){
-           assert.that(truthyTag,has.tag("#testLI"));
+           var actual = document.getElementById("sandBox");
+           var li = document.createElement("LI");
+           li.setAttribute("id","testLI");
+           actual.appendChild(document.createElement("P").appendChild(li));
+           assert.that("#sandBox",has.tag("#testLI"));
          });
       });
       test("no Expect => error",function(){
@@ -85,23 +100,14 @@ suite("Test the has.tag()",function(){
     });    
   });
   suite("Call expected and actual by id",function(){
-    setup(function(){
-      var sandBox = document.getElementById("sandBox");
-      sandBox.appendChild(truthyTag);
-      sandBox.appendChild(falsyDiv);
-    });
-    teardown(function(){
-      var sandBox = document.getElementById("sandBox");
-      sandBox.innerHTML = "";
-    });
     suite("Not available",function(){
       test("Don`t has this tag in an other => error",function(){
         assert.throws(function(){
           assert.that("#test",has.tag("#testLI"));
         });      
       });
-      test("no expect => error",function(){
-        assert.throws(function(){
+      test("no expect => OK",function(){
+        assert.doesNotThrow(function(){
           assert.that("#test",has.no.tag("#testLI"));
         });
       });
@@ -109,6 +115,10 @@ suite("Test the has.tag()",function(){
     suite("Is available",function(){
       test("tag in other tag available => ok",function(){
          assert.doesNotThrow(function(){
+           var sandBox = document.getElementById("sandBox");
+           var li = document.createElement("LI");
+           li.setAttribute("id","testLI");
+           sandBox.appendChild(li);
            assert.that("#sandBox",has.tag("#testLI"));
          });
       });

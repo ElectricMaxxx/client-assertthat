@@ -1,4 +1,12 @@
 suite "Testing has.lengthOf()", =>
+  setup =>
+    sandbox = document.getElementById "sandBox"
+    sandbox.appendChild document.createElement "P"
+    sandbox.appendChild document.createElement "P"
+    sandbox.appendChild document.createElement "P"
+  teardown =>
+    sandbox = document.getElementById "sandBox"
+    sandbox.innerHTML = ""
   suite "expected is number, opt undefined", =>
     test "acutal not defined => error", =>
       assert.throws =>
@@ -16,7 +24,6 @@ suite "Testing has.lengthOf()", =>
         actual = document.getElementById("sandBox")
         assert.that(actual,has.no.lengthOf(3))   
   suite "expected is number, opt is tagname",=>
-    setup =>
     test "No matching Tag (UC), number not 0 => error", =>
       assert.throws =>
         actual = document.getElementById("sandBox")
@@ -44,25 +51,24 @@ suite "Testing has.lengthOf()", =>
       assert.doesNotThrow =>
         assert.that(actual,has.lengthOf(3,"p"))        
   suite "expected is number, opt = all", =>
-    setup =>
-      
     test "number not same => error", =>
       assert.throws =>
-        assert.that(truthyTag, has.lengthOf(7,"all"))      
+        actual = document.getElementById("sandBox")
+        assert.that(actual, has.lengthOf(7,"all"))      
     test "number same => OK", =>
       assert.doesNotThrow =>
         actual = document.getElementById("sandBox")
-        assert.that(actual,has.lengthOf(4,"all"))          
+        assert.that(actual,has.lengthOf(3,"all"))          
     test "with other tags between, number same => OK", =>
       p = document.createElement("P")
       actual = document.getElementById("sandBox")
       actual.appendChild(p)
       assert.doesNotThrow =>
-          assert.that(actual,has.lengthOf(5,"all"))
+          assert.that(actual,has.lengthOf(4,"all"))
     test "with other tags nested, number same => OK", =>
       p = document.createElement("P")
       actual = document.getElementById("sandBox")
-      child = actual.childNodes
-      child[1].appendChild(p)
+      p.appendChild document.createElement "LI"
+      actual.appendChild p
       assert.doesNotThrow =>
-          assert.that(actual,has.lengthOf(6,"all"))          
+          assert.that(actual,has.lengthOf(5,"all"))          

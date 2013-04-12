@@ -1,6 +1,18 @@
 var _this = this;
 
 suite("Testing has.lengthOf()", function() {
+  setup(function() {
+    var sandbox;
+    sandbox = document.getElementById("sandBox");
+    sandbox.appendChild(document.createElement("P"));
+    sandbox.appendChild(document.createElement("P"));
+    return sandbox.appendChild(document.createElement("P"));
+  });
+  teardown(function() {
+    var sandbox;
+    sandbox = document.getElementById("sandBox");
+    return sandbox.innerHTML = "";
+  });
   suite("expected is number, opt undefined", function() {
     test("acutal not defined => error", function() {
       return assert.throws(function() {
@@ -30,7 +42,6 @@ suite("Testing has.lengthOf()", function() {
     });
   });
   suite("expected is number, opt is tagname", function() {
-    setup(function() {});
     test("No matching Tag (UC), number not 0 => error", function() {
       return assert.throws(function() {
         var actual;
@@ -77,17 +88,18 @@ suite("Testing has.lengthOf()", function() {
     });
   });
   return suite("expected is number, opt = all", function() {
-    setup(function() {});
     test("number not same => error", function() {
       return assert.throws(function() {
-        return assert.that(truthyTag, has.lengthOf(7, "all"));
+        var actual;
+        actual = document.getElementById("sandBox");
+        return assert.that(actual, has.lengthOf(7, "all"));
       });
     });
     test("number same => OK", function() {
       return assert.doesNotThrow(function() {
         var actual;
         actual = document.getElementById("sandBox");
-        return assert.that(actual, has.lengthOf(4, "all"));
+        return assert.that(actual, has.lengthOf(3, "all"));
       });
     });
     test("with other tags between, number same => OK", function() {
@@ -96,17 +108,17 @@ suite("Testing has.lengthOf()", function() {
       actual = document.getElementById("sandBox");
       actual.appendChild(p);
       return assert.doesNotThrow(function() {
-        return assert.that(actual, has.lengthOf(5, "all"));
+        return assert.that(actual, has.lengthOf(4, "all"));
       });
     });
     return test("with other tags nested, number same => OK", function() {
-      var actual, child, p;
+      var actual, p;
       p = document.createElement("P");
       actual = document.getElementById("sandBox");
-      child = actual.childNodes;
-      child[1].appendChild(p);
+      p.appendChild(document.createElement("LI"));
+      actual.appendChild(p);
       return assert.doesNotThrow(function() {
-        return assert.that(actual, has.lengthOf(6, "all"));
+        return assert.that(actual, has.lengthOf(5, "all"));
       });
     });
   });
