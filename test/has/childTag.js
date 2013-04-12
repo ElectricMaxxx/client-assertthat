@@ -1,18 +1,23 @@
 
 suite("Testing has.childTag()",function(){
+  setup(function(){
+    var sandBox = document.getElementById("sandBox");
+    if(sandBox == null){
+      //Than it will be destroid some tests befor
+      sandBox = document.createElement("DIV");
+      document.body.appendChild(sandBox);
+    }    
+    sandBox.setAttribute("id","sandBox");
+    var testChild = document.createElement("DIV");
+    sandBox.appendChild(testChild);
+    testChild.setAttribute("id","testChild");
+  });
+  teardown(function(){
+    var sandBox = document.getElementById("sandBox");
+    var testChild = document.getElementById("testChild");
+    sandBox.removeChild(testChild);
+  });  
   suite("Testing with an id selector",function(){
-    setup(function(){
-      var sandBox = document.getElementById("sandBox");
-      var testChild = document.createElement("DIV");
-      sandBox.appendChild(testChild);
-      testChild.setAttribute("id","testChild");
-    });
-    teardown(function(){
-      var sandBox = document.getElementById("sandBox");
-      var testChild = document.getElementById("testChild");
-      sandBox.removeChild(testChild);
-      
-    });
     suite("Child in Parent",function(){
       test("Child exist in Parent => OK",function(){
         assert.doesNotThrow(function(){

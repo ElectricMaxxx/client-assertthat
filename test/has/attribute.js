@@ -1,27 +1,43 @@
-var falsyDiv = document.createElement("DIV");
-var truthyDiv = document.createElement("DIV");
-truthyDiv.setAttribute("class","myClass");
-truthyDiv.setAttribute("id","myId");
 suite("Testing attributes",function(){
+  setup(function(){
+    
+    var sandBox = document.getElementById("sandBox");
+    
+    if(sandBox == null){
+      //Than it will be destroid some tests befor
+      sandBox = document.createElement("DIV");
+      document.body.appendChild(sandBox);
+    }
+    sandBox.setAttribute("id","sandBox");
+  });
+  teardown(function(){
+    var sandBox = document.getElementById("sandBox");
+    sandBox.removeAttribute("id");
+    sandBox.removeAttribute("class");
+  });
   suite("Testing not available attr",function(){
     test("class not available, but expected => error",function(){
       assert.throws(function(){
-        assert.that(falsyDiv, has.class());
+        var actual = document.getElementById("testList")
+        assert.that(actual,has.class());
       });
     });
       test("class not available, but expected, value expected => error",function(){
       assert.throws(function(){
-        assert.that(falsyDiv, has.class("message"));
+        var actual = document.getElementById("testList")
+        assert.that(actual, has.class("message"));
       });
     });
     test("id not available, but expected => error",function(){
       assert.throws(function(){
-        assert.that(falsyDiv, has.id());
+        var actual = document.createElement("DIV");
+        assert.that(actual, has.id());
       });
     });
       test("id not available, but expected, value expected => error",function(){
       assert.throws(function(){
-        assert.that(falsyDiv, has.id("message"));
+        var actual = document.createElement("DIV");
+        assert.that(actual, has.id("message"));
       });
     });
   });
@@ -29,34 +45,71 @@ suite("Testing attributes",function(){
   suite("Testing available attributes",function(){
     test("class available => ok",function(){
       assert.doesNotThrow(function(){
-        assert.that(truthyDiv, has.class());
+        var actual = document.getElementById("sandBox");
+        actual.setAttribute("class","testClass");
+        assert.that(actual, has.class());
       });
     });
     test("class available, value expected but not same => error",function(){
       assert.throws(function(){
-        assert.that(truthyDiv, has.class("test"));
+        var actual = document.getElementById("sandBox");
+        actual.setAttribute("class","testClass");        
+        assert.that(actual, has.class("test"));
       });
     }); 
     test("class available,same value expected => OK",function(){
       assert.doesNotThrow(function(){
-        assert.that(truthyDiv, has.class("myClass"));
+        var actual = document.getElementById("sandBox");
+        actual.setAttribute("class","testClass");                
+        assert.that(actual, has.class("testClass"));
       });
     }); 
     test("id available => ok",function(){
       assert.doesNotThrow(function(){
-        assert.that(truthyDiv, has.id());
+        var actual = document.getElementById("sandBox");        
+        assert.that(actual, has.id());
       });
     });
     test("id available, value expected but not same => error",function(){
       assert.throws(function(){
-        assert.that(truthyDiv, has.id("test"));
+        var actual = document.getElementById("sandBox");        
+        assert.that(actual, has.id("test"));
       });
     }); 
     test("id available,same value expected => OK",function(){
       assert.doesNotThrow(function(){
-        assert.that(truthyDiv, has.id("myId"));
+        var actual = document.getElementById("sandBox");        
+        assert.that(actual, has.id("sandBox"));
       });
     });
   });
-  
+  suite("Testing with css selectors as actual",function(){
+    test("no class => error",function(){
+      assert.throws(function(){
+        assert.that("#sandBox",has.class());
+      });
+    });
+    test("class exist but not same=> error",function(){
+      assert.throws(function(){
+        var actual = document.getElementById("sandBox");
+        actual.setAttribute("class","myTest");
+        assert.that("#sandBox",has.class("test"));
+      });
+    });    
+    test("class exist, same=> OK",function(){
+      assert.doesNotThrow(function(){
+        var actual = document.getElementById("sandBox");
+        actual.setAttribute("class","myTest");
+        assert.that("#sandBox",has.class("myTest"));
+      });
+    });  
+    test("multiple class exist, same=> OK",function(){
+      assert.doesNotThrow(function(){
+        var actual = document.getElementById("sandBox");
+        actual.setAttribute("class","myTest");
+        actual.setAttribute("class","myClass");
+        assert.that("#sandBox",has.class("myTest"));
+      });    
+   });
+  });
 });

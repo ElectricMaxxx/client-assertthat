@@ -1,7 +1,4 @@
-sorry for that terrible written english, but my german isn`t even better ;-)
-
-
-#client version of node-assertthat
+#Assert testing in DOM with a version of node-assertthat 
 
 this will be a client version of 
 https://github.com/goloroden/node-assertthat
@@ -27,13 +24,22 @@ You are able to add your own tests by doing a simple script include:
 <script type="text/javascript" src="test/myTest.js"></script>
 ```
 
+
+
 #DOM - Testing
 
 In my workflow with an own projekt a saw that i need some DOM - Testing functions too. 
 I tried to start this by adding new function, that starts with `has.` These functions are not stable. I started do do my fist tests.
 But they have done some good jobs unitl now.
 
-For more Information watch the issue.
+For more Information about coding watch the issues.
+
+#Important for testing
+
+insert the call of mocha.run() after the last HTML node, than mocha runs all test after the whole doc is loaded and you`ve got no
+trouble with no existing nodes ...
+It might be possible to include a document.readyState test into the tests, but than it will be only available inside the `assert.that();` 
+and not inside the setup()/teardowsn() (or befor()/after()). These functions are called by mocha.js that wrapps the whole Test.
 
 #has.attribute("value")
 
@@ -47,9 +53,9 @@ assert.that(actual,has.id("myId")); //checks if ther is a id with the value myId
 assert.that(actual,has.class()); //checks if therer is a class attribute in actual
 assert.that(actual,has.id()); //checks if therer is a class attribute in actual
 ```
+is working now with #-selector in actual too
 
-multiple classes arn`t tested at the moment!!
-negation has to be tested too!!
+multiple classes arn`t supported at the moment.
 
 #has.listItem
 
