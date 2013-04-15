@@ -10,7 +10,7 @@ suite("Test the has.class() function ", function() {
     truthyClass.setAttribute("id", "truthyClass");
     truthyClass.setAttribute("class", "myClass");
     sandbox.appendChild(truthyClass);
-    return sandbox.appendChild(falsyClass);
+    sandbox.appendChild(falsyClass);
   });
   teardown(function() {
     var falsyClass, sandbox, truthyClass;
@@ -18,62 +18,196 @@ suite("Test the has.class() function ", function() {
     truthyClass = document.getElementById("truthyClass");
     falsyClass = document.getElementById("falsyClass");
     sandbox.removeChild(truthyClass);
-    return sandbox.removeChild(falsyClass);
+    sandbox.removeChild(falsyClass);
   });
-  suite("actual is a DOM Object", function() {
-    test("actual is not available  => error", function() {
-      return assert.throws(function() {
-        return assert.that(null, has["class"](".myClass"));
+  suite("nothing available", function() {
+    suite("actual by a DOM element", function() {
+      test("actual null, class expected => error", function() {
+        assert.throws(function() {
+          assert.that(null, has.class);
+        });
+      });
+      test("actual null, class not expected => error", function() {
+        assert.throws(function() {
+          assert.that(null, has.no.class);
+        });
       });
     });
-    test("actual available, no class there => error", function() {
-      return assert.throws(function() {
-        var actual;
-        actual = document.getElementById("falsyClass");
-        return assert.that(actual, has["class"]("test"));
+    suite("actual as an css selector", function() {
+      test("actual null, class expected => error", function() {
+        assert.throws(function() {
+          assert.that("#falsy", has.class);
+        });
       });
-    });
-    test("actual available, has one class wich is the same => OK", function() {
-      return assert.doesNotThrow(function() {
-        var actual;
-        actual = document.getElementById("truthyClass");
-        return assert.that(actual, has["class"]("myClass"));
+      test("actual null, class not expected => error", function() {
+        assert.throws(function() {
+          assert.that("#falsy", has.no.class);
+        });
       });
-    });
-    return test("actual available, has two class on machtes => OK", function() {
-      return assert.doesNotThrow(function() {
-        var actual, oldClass;
-        actual = document.getElementById("truthyClass");
-        oldClass = actual.getAttribute("class");
-        actual.setAttribute("class", "test " + " " + oldClass);
-        return assert.that(actual, has["class"]("myClass"));
-      });
-    });
+    });    
   });
-  return suite("actual with a css selector", function() {
-    test("actual is not available  => error", function() {
-      return assert.throws(function() {
-        return assert.that("#test", has["class"](".myClass"));
+  suite("actual is available", function() {
+    suite("actual by an DOM element", function() {
+      test("no class there, no expected => OK", function() {
+        assert.doesNotThrow(function() {
+          var actual;
+          actual = document.getElementById("falsyClass");
+          assert.that(actual, has.no.class());
+        });
+      });
+      test("Class exist, expected => OK", function(){
+        assert.doesNotThrow(function() {
+          var actual;
+          actual = document.getElementById("truthyClass");
+          assert.that(actual, has.class());
+          });
+      });
+      test("Class exist, not expected => error", function (){
+        assert.throws(function() {
+          var actual;
+          actual = document.getElementById("truthyClass");
+          assert.that(actual, has.no.class());
+        });
+      });
+      test("Class exist, this not expected => error", function() {
+        assert.throws(function() {
+          var actual;
+          actual = document.getElementById("truthyClass");
+          asser.that(actual, has.no.class("myClass"));
+        });
+      });
+      test("Class exist, this expected => OK", function() {
+        assert.doesNotThrow(function() {
+          var actual;
+          actual = document.getElementById("truthyClass");
+          assert.that(actual, has.class("myClass"));
+        });
+      });
+      test("Class exist,other expected => error", function() {
+        assert.throws(function() {
+          var actual;
+          actual = document.getElementById("truthyClass");
+          asser.that(actual, has.class("test"));
+        });
+      });
+      test("Class exist,other not expected => OK", function() {
+        assert.doesNotThrow(function() {
+          var actual;
+          actual = document.getElementById("truthyClass");
+          assert.that(actual, has.no.class("test"));
+        });
+      });
+      test("Multiple exist, one match, that is not expected => error", function() {
+        assert.throws(function() {
+          var actual, oldClass;
+          actual = document.getElementById("truthyClass");
+          oldClass = actual.getAttribute("class");
+          actual.setAttribute("class", "test " + " " + oldClass);
+          asser.that(actual, has.no.class());
+        });
+      });
+      test("Multiple exist, one match, that ist expected => OK", function() {
+        assert.doesNotThrow(function() {
+          var actual, oldClass;
+          actual = document.getElementById("truthyClass");
+          oldClass = actual.getAttribute("class");
+          actual.setAttribute("class", "test " + " " +oldClass);
+          console.log(actual.getAttribute("class"));
+          assert.that(actual, has.class("myClass"));
+        });
+      });
+      test("Multiple exist, one match, not specific expected => OK", function() {
+        assert.doesNotThrow(function() {
+          var actual, oldClass;
+          actual = document.getElementById("truthyClass");
+          oldClass = actual.getAttribute("class");
+          actual.setAttribute("class", "test " + " " + oldClass);
+          assert.that(actual, has.class());
+        });
+      });
+      test("Multiple exist, one match, not specific not expected => error", function() {
+        assert.throws(function() {
+          var actual, oldClass;
+          actual = document.getElementById("truthyClass");
+          oldClass = actual.getAttribute("class");
+          actual.setAttribute("class", "test " + " " + oldClass);
+          asser.that(actual, has.no.class());
+        });
       });
     });
-    test("actual available, no class there => error", function() {
-      return assert.throws(function() {
-        return assert.that("#falsyClass", has["class"]("test"));
+    suite("actual as an css selctor", function() {
+      test("no class there, no expected => OK", function() {
+        assert.doesNotThrow(function() {
+          assert.that("#falsyClass", has.no.class());
+        });
       });
-    });
-    test("actual available, has one class wich is the same => OK", function() {
-      return assert.doesNotThrow(function() {
-        return assert.that("#truthyClass", has["class"]("myClass"));
+      test("Class exist, expected => OK", function(){
+        assert.doesNotThrow(function() {
+          assert.that("#truthyClass", has.class());
+          });
       });
-    });
-    return test("actual available, has two class on machtes => OK", function() {
-      return assert.doesNotThrow(function() {
-        var actual, oldClass;
-        actual = document.getElementById("truthyClass");
-        oldClass = actual.getAttribute("class");
-        actual.setAttribute("class", "test " + " " + oldClass);
-        return assert.that("#truthyClass", has["class"]("myClass"));
+      test("Class exist, not expected => error", function (){
+        assert.throws(function() {
+          assert.that("#truthyClass", has.no.class());
+        });
       });
+      test("Class exist, this not expected => error", function() {
+        assert.throws(function() {
+          asser.that("#truthyClass", has.no.class("myClass"));
+        });
+      });
+      test("Class exist, this expected => OK", function() {
+        assert.doesNotThrow(function() {
+          assert.that("#truthyClass", has.class("myClass"));
+        });
+      });
+      test("Class exist,other expected => error", function() {
+        assert.throws(function() {
+          asser.that("#truthyClass", has.class("test"));
+        });
+      });
+      test("Class exist,other not expected => OK", function() {
+        assert.doesNotThrow(function() {
+          assert.that("#truthyClass", has.no.class("test"));
+        });
+      });
+      test("Multiple exist, one match, that is not expected => error", function() {
+        assert.throws(function() {
+          var actual, oldClass;
+          actual = document.getElementById("truthyClass");
+          oldClass = actual.getAttribute("class");
+          actual.setAttribute("class", "test " + " " + oldClass);
+          asser.that("#truthyClass", has.no.class());
+        });
+      });
+      test("Multiple exist, one match, that ist expected => OK", function() {
+        assert.doesNotThrow(function() {
+          var actual, oldClass;
+          actual = document.getElementById("truthyClass");
+          oldClass = actual.getAttribute("class");
+          actual.setAttribute("class", "test " + " " +oldClass);
+          console.log(actual.getAttribute("class"));
+          assert.that("#truthyClass", has.class("myClass"));
+        });
+      });
+      test("Multiple exist, one match, not specific expected => OK", function() {
+        assert.doesNotThrow(function() {
+          var actual, oldClass;
+          actual = document.getElementById("truthyClass");
+          oldClass = actual.getAttribute("class");
+          actual.setAttribute("class", "test " + " " + oldClass);
+          assert.that("#truthyClass", has.class());
+        });
+      });
+      test("Multiple exist, one match, not specific not expected => error", function() {
+        assert.throws(function() {
+          var actual, oldClass;
+          actual = document.getElementById("truthyClass");
+          oldClass = actual.getAttribute("class");
+          actual.setAttribute("class", "test " + " " + oldClass);
+          asser.that("#truthyClass", has.no.class());
+        });
+      });      
     });
   });
 });
