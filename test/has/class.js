@@ -210,4 +210,82 @@ suite("Test the has.class() function ", function() {
       });      
     });
   });
+  suite("actual is document root",function(){
+    suite("empty actual as document root",function(){
+      suite("class as single class available",function(){
+        test("expected => OK",function(){
+          assert.doesNotThrow(function(){
+            assert.that("",has.class("myClass"));
+          });
+        });
+        test("not expected => error",function(){
+          assert.throws(function(){
+            assert.that("",has.no.class("myClass"))
+          });
+        });
+      });
+      suite("class available in multi class",function(){
+        test("expected => OK",function(){
+          assert.doesNotThrow(function(){
+              var test = document.getElementById("truthyClass");
+              var oldClass = test.getAttribute("class");
+              test.setAttribute("class","myTest "+oldClass);            
+              assert.that("",has.class("myClass"));
+          });
+        });
+        test("not expected => error",function(){
+            assert.throws(function(){
+              var test = document.getElementById("truthyClass");
+              var oldClass = test.getAttribute("class");
+              test.setAttribute("class","myTest "+oldClass);                          
+              assert.that("",has.no.clas("myClass"));
+            });
+        });        
+      });
+    });
+    test("empty expected => error",function(){
+      assert.throws(function(){
+        assert.that("",has.class());
+      });
+    });
+    suite("with 'document' as actual",function(){
+    suite("empty actual as document root",function(){
+      suite("class as single class available",function(){
+        test("expected => OK",function(){
+          assert.doesNotThrow(function(){
+            assert.that("document",has.class("myClass"));
+          });
+        });
+        test("not expected => error",function(){
+          assert.throws(function(){
+            assert.that("document",has.no.class("myClass"))
+          });
+        });
+      });
+      suite("class available in multi class",function(){
+        test("expected => OK",function(){
+          assert.doesNotThrow(function(){
+              var test = document.getElementById("truthyClass");
+              var oldClass = test.getAttribute("class");
+              test.setAttribute("class","myTest "+oldClass);            
+              assert.that("document",has.class("myClass"));
+          });
+        });
+        test("not expected => error",function(){
+            assert.throws(function(){
+              var test = document.getElementById("truthyClass");
+              var oldClass = test.getAttribute("class");
+              test.setAttribute("class","myTest "+oldClass);                          
+              assert.that("document",has.no.clas("myClass"));
+            });
+        });        
+      });
+    });
+    test("empty expected => error",function(){
+      assert.throws(function(){
+        assert.that("document",has.class());
+      });
+    });      
+    });
+  });
 });
