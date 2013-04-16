@@ -8,17 +8,17 @@ falsyHtml = '<div id="testing">My little <b>falsy Test</b> <p>with Content</p></
 emptyHtml = '';
 
 suite("Testing has.htmlContent()", function() {
-  setup(function() {
-    var sandbox;
-    sandbox = document.getElementById("sandBox");
-    return sandBox.innerHTML = truthyHtml;
-  });
-  teardown(function() {
-    var sandbox;
-    sandbox = document.getElementById("sandBox");
-    return sandBox.innerHTML = '';
-  });
   suite("actual is a DOM element", function() {
+    setup(function() {
+      var sandbox;
+      sandbox = document.getElementById("sandBox");
+      return sandBox.innerHTML = truthyHtml;
+    });
+    teardown(function() {
+      var sandbox;
+      sandbox = document.getElementById("sandBox");
+      return sandBox.innerHTML = '';
+    });
     test("actual is not available => error", function() {
       return assert.throws(function() {
         return assert.that(null, has.htmlContent(truthyHtml));
@@ -53,7 +53,17 @@ suite("Testing has.htmlContent()", function() {
       });
     });
   });
-  return suite("actual as an css selector", function() {
+  suite("actual as an css selector", function() {
+    setup(function() {
+      var sandbox;
+      sandbox = document.getElementById("sandBox");
+      return sandBox.innerHTML = truthyHtml;
+    });
+    teardown(function() {
+      var sandbox;
+      sandbox = document.getElementById("sandBox");
+      return sandBox.innerHTML = '';
+    });
     test("actual is not available => error", function() {
       return assert.throws(function() {
         return assert.that("#falsyTag", has.htmlContent(truthyHtml));
@@ -77,6 +87,33 @@ suite("Testing has.htmlContent()", function() {
     return test("Content not same & not expected => OK", function() {
       return assert.doesNotThrow(function() {
         return assert.that("#sandBox", has.no.htmlContent(falsyHtml));
+      });
+    });
+  });
+  return suite("actual is empty (only with css-Selector)", function() {
+    setup(function() {
+      var sandbox;
+      sandbox = document.getElementById("sandBox");
+      return sandBox.innerHTML = "";
+    });
+    test("empty expected => OK", function() {
+      return assert.doesNotThrow(function() {
+        return assert.that("#sandBox", has.htmlContent());
+      });
+    });
+    test("empty not expected => error", function() {
+      return assert.throws(function() {
+        return assert.that("#sandBox", has.no.Content());
+      });
+    });
+    test("something (not empty) expected => error", function() {
+      return assert.throws(function() {
+        return assert.that("#sandBox", has.htmlContent(truthyHtml));
+      });
+    });
+    return test("something (not empty) not expected => OK", function() {
+      return assert.doesNotThrow(function() {
+        return assert.that("#sandBox", has.no.htmlContent(truthyHtml));
       });
     });
   });
