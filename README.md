@@ -23,13 +23,20 @@ Everybody knows what this is looking for.
 
 ##Usage:
 
-It`s very easy to use this. Clone this projekt an run the `test.html`.
+It is very easy to use this. Clone this projekt an run the `index.html`.
 Thats it!
 
-You are able to add your own tests by doing a simple script include:
+You won't ever need a script tag to load all tests, add your test only to the `config.js`
+
  ```
-<script type="text/javascript" src="test/myTest.js"></script>
-```
+    require([
+        'test/has/attribute','test/yourTest'
+    ],function(require){
+        mocha.run();
+    });
+
+````
+you can leave the .js at the end - that's require.js
 
 
 
