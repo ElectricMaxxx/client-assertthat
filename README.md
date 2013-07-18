@@ -50,10 +50,7 @@ For more Information about coding watch the issues.
 
 ##Important for testing
 
-insert the call of mocha.run() after the last HTML node, than mocha runs all test after the whole doc is loaded and you`ve got no
-trouble with no existing nodes ...
-It might be possible to include a document.readyState test into the tests, but than it will be only available inside the `assert.that();` 
-and not inside the setup()/teardowsn() (or befor()/after()). These functions are called by mocha.js that wrapps the whole Test.
+all functions need to be tested again with the new environment.
 
 ###has.attribute("value")
 
