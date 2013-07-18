@@ -1,5 +1,10 @@
 #Assert testing in DOM with a version of node-assertthat 
 
+#Important Notice
+
+cause of code refactoring is client-assertthat almost useless at the moment.
+I am trying to wrap the test framework into require.js
+
 this will be a client version of 
 https://github.com/goloroden/node-assertthat
 
